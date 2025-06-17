@@ -91,11 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 // Couleurs ajustées pour le nouvel arrière-plan du header
-                header.style.background = 'radial-gradient(circle at top left, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.88))';
-                header.style.borderBottomColor = 'rgba(44,177,255,0.4)';
+                header.style.background = 'rgba(13, 13, 13, 0.98)'; // Plus opaque et foncé au défilement
+                header.style.borderBottomColor = 'rgba(42, 42, 42, 0.4)';
                 header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.6)'; /* Ombre plus prononcée au défilement */
             } else {
-                header.style.background = 'radial-gradient(circle at top left, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.75))'; /* Retour au fond par défaut */
+                header.style.background = 'rgba(13, 13, 13, 0.95)'; /* Retour au fond par défaut */
                 header.style.borderBottomColor = 'var(--border-color)';
                 header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)'; /* Retour à l'ombre par défaut */
             }
