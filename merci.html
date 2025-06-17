@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation - Neurovia AI</title>
+    <meta name="description" content="Confirmation de l'envoi de votre message à Neurovia AI.">
+    <link rel="icon" href="Gemini_Generated_Image_6ywd5r6ywd5r6ywd.jpg.png" type="image/jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlalHpgZ4V6yTq+w6+55t+g7+N2z5P5+t7+g7+N2z5P5+t7+R3+d2+w8+e0+r3+t5+u7+G5+c6+a8+A6+A7+B7+C8+D9+E9+F9+G9+H9+I9+J9+K9+L9+M9+N9+O9+P9+Q9+R9+S9+T9+U9+V9+W9+X9+Y9+Z9/CSS" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <a href="index.html#hero" class="logo-link" aria-label="Accueil Neurovia AI">
+                    <img src="Gemini_Generated_Image_6ywd5r6ywd5r6ywd.jpg.png" alt="Logo Neurovia AI" class="logo-image">
+                    <span class="logo-text">Neurovia AI</span>
+                </a>
+            </div>
+            <nav class="main-nav" aria-label="Navigation principale">
+                <a href="index.html#services">Services</a>
+                <a href="index.html#why-choose-us">Avantages</a>
+                <a href="index.html#about">À propos</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="politique-confidentialite.html">Confidentialité</a>
+                <a href="conditions-utilisation.html">Conditions</a>
+            </nav>
+            <button class="hamburger-menu" aria-expanded="false" aria-controls="main-nav-list" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="confirmation-page">
+            <div class="container">
+                <div class="confirmation-content reveal-bottom">
+                    <i class="far fa-check-circle icon" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h2>Merci pour votre message !</h2>
+                    <p>Nous avons bien reçu vos informations et vous contacterons très prochainement.
+                       <br>Date de confirmation : <span id="confirmation-date"></span></p>
+                    <a href="index.html" class="btn btn-primary">Retour au site principal</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html#hero">Accueil</a>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#why-choose-us">Avantages</a>
+                <a href="index.html#about">À propos</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                <a href="conditions-utilisation.html">Conditions d'utilisation</a>
+            </div>
+            <p>&copy; <span id="current-year-confirmation"></span> Neurovia AI · Tous droits réservés.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Neurovia AI"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter de Neurovia AI"><i class="fab fa-twitter-square"></i></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Neurovia AI"><i class="fab fa-facebook-square"></i></a>
+            </div>
+            <p><a href="mailto:contact@neurovia.ai">contact@neurovia.ai</a></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Met à jour l'année du copyright dans le pied de page de la page de confirmation
+            const currentYearSpan = document.getElementById('current-year-confirmation');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Met à jour la date de confirmation dynamique
+            const confirmationDateSpan = document.getElementById('confirmation-date');
+            if (confirmationDateSpan) {
+                const today = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                confirmationDateSpan.textContent = today.toLocaleDateString('fr-FR', options);
+            }
+
+            // Initialisation de ScrollReveal pour les éléments sur cette page
+            const defaultRevealOptions = {
+                distance: '40px',
+                opacity: 0,
+                duration: 900,
+                easing: 'ease-out',
+            };
+            ScrollReveal().reveal('.reveal-bottom', {
+                ...defaultRevealOptions,
+                origin: 'bottom',
+            });
+
+            // Gère le menu hamburger (copie du script.js principal pour la cohérence du header)
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (hamburgerMenu && mainNav) {
+                hamburgerMenu.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                    hamburgerMenu.classList.toggle('active');
+                    const isExpanded = hamburgerMenu.classList.contains('active');
+                    hamburgerMenu.setAttribute('aria-expanded', isExpanded);
+                });
+
+                document.querySelectorAll('.main-nav a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active');
+                            hamburgerMenu.classList.remove('active');
+                            hamburgerMenu.setAttribute('aria-expanded', false);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

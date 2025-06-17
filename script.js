@@ -1,104 +1,221 @@
-// Attendre que le DOM soit complètement chargé avant d'exécuter le script
-document.addEventListener('DOMContentLoaded', () => {
+// Initialisation de ScrollReveal
+ScrollReveal().reveal('.reveal-top', {
+    distance: '50px',
+    origin: 'top',
+    opacity: 0,
+    duration: 1000,
+    interval: 200,
+    easing: 'ease-in-out'
+});
 
-    // Initialisation de ScrollReveal pour les animations au défilement
-    const defaultRevealOptions = {
-        distance: '50px',
-        opacity: 0,
-        duration: 1000,
-        easing: 'ease-in-out',
-    };
+ScrollReveal().reveal('.reveal-bottom', {
+    distance: '50px',
+    origin: 'bottom',
+    opacity: 0,
+    duration: 1000,
+    interval: 150,
+    easing: 'ease-in-out'
+});
 
-    ScrollReveal().reveal('.reveal-top', {
-        ...defaultRevealOptions,
-        origin: 'top',
-        interval: 200,
+ScrollReveal().reveal('.reveal-left', {
+    distance: '50px',
+    origin: 'left',
+    opacity: 0,
+    duration: 1000,
+    interval: 100,
+    easing: 'ease-in-out'
+});
+
+ScrollReveal().reveal('.reveal-right', {
+    distance: '50px',
+    origin: 'right',
+    opacity: 0,
+    duration: 1000,
+    interval: 100,
+    easing: 'ease-in-out'
+});
+
+// Fonctionnalité du menu hamburger
+const hamburgerMenu = document.querySelector('.hamburger-menu');
+const mainNav = document.querySelector('.main-nav');
+
+if (hamburgerMenu && mainNav) {
+    hamburgerMenu.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+        hamburgerMenu.classList.toggle('active');
+        // Basculer l'attribut aria-expanded pour l'accessibilité
+        const expanded = hamburgerMenu.getAttribute('aria-expanded') === 'true' || false;
+        hamburgerMenu.setAttribute('aria-expanded', !expanded);
     });
 
-    ScrollReveal().reveal('.reveal-bottom', {
-        ...defaultRevealOptions,
-        origin: 'bottom',
-        interval: 150,
-    });
-
-    ScrollReveal().reveal('.reveal-left', {
-        ...defaultRevealOptions,
-        origin: 'left',
-        interval: 100,
-    });
-
-    ScrollReveal().reveal('.reveal-right', {
-        ...defaultRevealOptions,
-        origin: 'right',
-        interval: 100,
-    });
-
-    // Fonctionnalité du menu hamburger pour la navigation mobile
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const mainNav = document.querySelector('.main-nav');
-
-    if (hamburgerMenu && mainNav) {
-        hamburgerMenu.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-            hamburgerMenu.classList.toggle('active');
-            const isExpanded = hamburgerMenu.classList.contains('active');
-            hamburgerMenu.setAttribute('aria-expanded', isExpanded);
+    // Fermer la navigation lorsqu'un lien est cliqué (pour mobile)
+    document.querySelectorAll('.main-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                hamburgerMenu.setAttribute('aria-expanded', 'false'); // Réinitialiser aria-expanded
+            }
         });
+    });
+}
 
-        // Ferme le menu de navigation lorsque un lien est cliqué (utile pour les appareils mobiles)
-        document.querySelectorAll('.main-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (mainNav.classList.contains('active')) {
-                    mainNav.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                    hamburgerMenu.setAttribute('aria-expanded', false);
+// --- Soumission de formulaire et redirection ---
+const contactForm = document.getElementById('contactForm');
+const THANK_YOU_PAGE_URL = 'merci.html'; // Créez cette page !
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    // Getform gère généralement Content-Type pour multipart/form-data automatiquement
+                    // 'Accept': 'application/json' // Peut ajouter ceci si vous voulez une réponse JSON, mais Getform ne l'exige pas pour les soumissions de base
                 }
             });
-        });
-    }
 
-    // Mise à jour dynamique de l'année du copyright dans le pied de page
+            // Vérifier si la soumission du formulaire a réussi
+            // Getform renvoie un 200 OK pour les soumissions réussies
+            if (response.ok) {
+                // Rediriger vers la page de remerciement
+                window.location.href = THANK_YOU_PAGE_URL;
+            } else {
+                // Gérer les réponses non-OK (par exemple, erreur Getform, erreur serveur)
+                console.error('La soumission du formulaire a échoué :', response.status, response.statusText);
+                alert('Une erreur est survenue lors de l\'envoi de votre message. Veuillez réessayer plus tard.');
+                // Optionnellement, analyser la réponse pour une erreur plus spécifique de Getform
+                // const errorData = await response.json();
+                // console.error('Détails de l\'erreur :', errorData);
+            }
+        } catch (error) {
+            // Gérer les erreurs réseau
+            console.error('Erreur réseau lors de la soumission du formulaire :', error);
+            alert('Problème de connexion. Veuillez vérifier votre internet et réessayer.');
+        }
+    });
+}
+
+// Définir l'année en cours dans le pied de page
+document.addEventListener('DOMContentLoaded', () => {
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
+});// Initialisation de ScrollReveal
+ScrollReveal().reveal('.reveal-top', {
+    distance: '50px',
+    origin: 'top',
+    opacity: 0,
+    duration: 1000,
+    interval: 200,
+    easing: 'ease-in-out'
+});
 
-    // Défilement fluide pour les liens d'ancrage
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
+ScrollReveal().reveal('.reveal-bottom', {
+    distance: '50px',
+    origin: 'bottom',
+    opacity: 0,
+    duration: 1000,
+    interval: 150,
+    easing: 'ease-in-out'
+});
 
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
+ScrollReveal().reveal('.reveal-left', {
+    distance: '50px',
+    origin: 'left',
+    opacity: 0,
+    duration: 1000,
+    interval: 100,
+    easing: 'ease-in-out'
+});
 
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
+ScrollReveal().reveal('.reveal-right', {
+    distance: '50px',
+    origin: 'right',
+    opacity: 0,
+    duration: 1000,
+    interval: 100,
+    easing: 'ease-in-out'
+});
 
-            if (mainNav && hamburgerMenu && mainNav.classList.contains('active')) {
+// Fonctionnalité du menu hamburger
+const hamburgerMenu = document.querySelector('.hamburger-menu');
+const mainNav = document.querySelector('.main-nav');
+
+if (hamburgerMenu && mainNav) {
+    hamburgerMenu.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+        hamburgerMenu.classList.toggle('active');
+        // Basculer l'attribut aria-expanded pour l'accessibilité
+        const expanded = hamburgerMenu.getAttribute('aria-expanded') === 'true' || false;
+        hamburgerMenu.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Fermer la navigation lorsqu'un lien est cliqué (pour mobile)
+    document.querySelectorAll('.main-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mainNav.classList.contains('active')) {
                 mainNav.classList.remove('active');
                 hamburgerMenu.classList.remove('active');
-                hamburgerMenu.setAttribute('aria-expanded', false);
+                hamburgerMenu.setAttribute('aria-expanded', 'false'); // Réinitialiser aria-expanded
             }
         });
     });
+}
 
-    // Effet de l'en-tête au défilement
-    const header = document.querySelector('header');
-    if (header) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                // Couleurs ajustées pour le nouvel arrière-plan du header
-                header.style.background = 'rgba(13, 13, 13, 0.98)'; // Plus opaque et foncé au défilement
-                header.style.borderBottomColor = 'rgba(42, 42, 42, 0.4)';
-                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.6)'; /* Ombre plus prononcée au défilement */
+// --- Soumission de formulaire et redirection ---
+const contactForm = document.getElementById('contactForm');
+const THANK_YOU_PAGE_URL = 'merci.html'; // Créez cette page !
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    // Getform gère généralement Content-Type pour multipart/form-data automatiquement
+                    // 'Accept': 'application/json' // Peut ajouter ceci si vous voulez une réponse JSON, mais Getform ne l'exige pas pour les soumissions de base
+                }
+            });
+
+            // Vérifier si la soumission du formulaire a réussi
+            // Getform renvoie un 200 OK pour les soumissions réussies
+            if (response.ok) {
+                // Rediriger vers la page de remerciement
+                window.location.href = THANK_YOU_PAGE_URL;
             } else {
-                header.style.background = 'rgba(13, 13, 13, 0.95)'; /* Retour au fond par défaut */
-                header.style.borderBottomColor = 'var(--border-color)';
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)'; /* Retour à l'ombre par défaut */
+                // Gérer les réponses non-OK (par exemple, erreur Getform, erreur serveur)
+                console.error('La soumission du formulaire a échoué :', response.status, response.statusText);
+                alert('Une erreur est survenue lors de l\'envoi de votre message. Veuillez réessayer plus tard.');
+                // Optionnellement, analyser la réponse pour une erreur plus spécifique de Getform
+                // const errorData = await response.json();
+                // console.error('Détails de l\'erreur :', errorData);
             }
-        });
+        } catch (error) {
+            // Gérer les erreurs réseau
+            console.error('Erreur réseau lors de la soumission du formulaire :', error);
+            alert('Problème de connexion. Veuillez vérifier votre internet et réessayer.');
+        }
+    });
+}
+
+// Définir l'année en cours dans le pied de page
+document.addEventListener('DOMContentLoaded', () => {
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
     }
 });
