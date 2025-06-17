@@ -136,8 +136,8 @@
         <section id="contact">
             <div class="container">
                 <h2 class="reveal-bottom">Contactez-nous</h2>
-                <!-- Modifications pour Getform: L'action pointe vers votre endpoint Getform avec la redirection -->
-                <form action="https://getform.io/f/aqomvqga" method="POST" class="contact-form reveal-bottom" aria-label="Formulaire de contact">
+                <!-- Modifications pour Getform: Ajout de enctype="multipart/form-data" et input type="file" -->
+                <form action="https://getform.io/f/https://getform.io/f/aqomvqga?redirectTo=/confirmation.html" method="POST" enctype="multipart/form-data" class="contact-form reveal-bottom" aria-label="Formulaire de contact">
                     <label for="name" class="sr-only">Votre nom complet</label>
                     <input type="text" id="name" name="name" placeholder="Votre nom complet" required aria-required="true">
 
@@ -149,6 +149,10 @@
 
                     <label for="message" class="sr-only">Décrivez votre projet ou votre question</label>
                     <textarea id="message" name="message" rows="6" placeholder="Décrivez votre projet ou votre question..." required aria-required="true"></textarea>
+
+                    <!-- Nouveau champ pour le téléversement de fichier -->
+                    <label for="file-upload" class="sr-only">Joindre un fichier (optionnel)</label>
+                    <input type="file" id="file-upload" name="file" class="file-input">
 
                     <button type="submit" class="btn btn-primary">Envoyer le message</button>
                 </form>
